@@ -87,18 +87,68 @@
     <a class="link-button" href="3.html">3교시 부인과학 79번</a> 
     </div>
 
-    <!-- ✅ 영상 1 -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>영상 반복 페이지</title>
+    <style>
+      body {
+        background: #000;
+        color: #fff;
+        font-family: sans-serif;
+        padding: 20px;
+      }
+      h2, h3 {
+        text-align: center;
+      }
+      .video-wrapper {
+        max-width: 720px;
+        margin: 0 auto 50px auto;
+      }
+      .video-container {
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%;
+        background: black;
+      }
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background-color: black;
+        z-index: 1;
+      }
+      iframe, #player1 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- ✅ 영상 1 (loop) -->
     <div class="video-wrapper" id="q2">
       <hr />
       <h2>2교시 침구학 40번</h2>
       <div class="video-container">
         <div class="overlay"></div>
-        <iframe src="https://www.youtube.com/embed/vPCkCcvD7P8?start=96&end=105&autoplay=1&mute=1&rel=0&modestbranding=1&showinfo=0" allowfullscreen></iframe>
+        <div id="player1"></div> <!-- player1으로 바꿈 -->
       </div>
-      <h3>출처: <a href="https://www.youtube.com/embed/vPCkCcvD7P8?start=96&end=105" target="_blank" style="color: #4eaaff; text-decoration: underline;">https://www.youtube.com/embed/vPCkCcvD7P8?start=96&end=105</a></h3>
+      <h3>출처: 
+        <a href="https://www.youtube.com/watch?v=vPCkCcvD7P8" target="_blank" style="color: #4eaaff; text-decoration: underline;">
+          https://www.youtube.com/watch?v=vPCkCcvD7P8
+        </a>
+      </h3>
       <hr />
-    </div>    
-    
+    </div>
+
     <!-- ✅ 영상 2 -->
     <div class="video-wrapper" id="q1">
       <hr />
@@ -107,7 +157,11 @@
         <div class="overlay"></div>
         <iframe src="https://www.youtube.com/embed/N65GS4iTyhs?rel=0&modestbranding=1&showinfo=0" allowfullscreen></iframe>
       </div>
-      <h3>출처: <a href="https://www.youtube.com/watch?v=N65GS4iTyhs" target="_blank" style="color: #4eaaff; text-decoration: underline;">https://www.youtube.com/watch?v=N65GS4iTyhs</a></h3>
+      <h3>출처: 
+        <a href="https://www.youtube.com/watch?v=N65GS4iTyhs" target="_blank" style="color: #4eaaff; text-decoration: underline;">
+          https://www.youtube.com/watch?v=N65GS4iTyhs
+        </a>
+      </h3>
       <hr />
     </div>
 
@@ -119,9 +173,50 @@
         <div class="overlay"></div>
         <iframe src="https://www.youtube.com/embed/nM91dHAwcr8?rel=0&modestbranding=1&showinfo=0" allowfullscreen></iframe>
       </div>
-      <h3>출처: <a href="https://www.youtube.com/watch?v=nM91dHAwcr8" target="_blank" style="color: #4eaaff; text-decoration: underline;">https://www.youtube.com/watch?v=nM91dHAwcr8</a></h3>
+      <h3>출처: 
+        <a href="https://www.youtube.com/watch?v=nM91dHAwcr8" target="_blank" style="color: #4eaaff; text-decoration: underline;">
+          https://www.youtube.com/watch?v=nM91dHAwcr8
+        </a>
+      </h3>
       <hr />
     </div>
+
+    <!-- ✅ YouTube IFrame API 및 1번 영상 loop 스크립트 -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+      let player1;
+      const startTime = 96;
+      const endTime = 110;
+
+      function onYouTubeIframeAPIReady() {
+        player1 = new YT.Player("player1", {
+          videoId: "vPCkCcvD7P8",
+          playerVars: {
+            start: startTime,
+            end: endTime,
+            rel: 0,
+            modestbranding: 1,
+            autoplay: 1,
+            mute: 1,
+            controls: 1,
+            enablejsapi: 1
+          },
+          events: {
+            onReady: (event) => event.target.playVideo(),
+            onStateChange: onPlayerStateChange
+          }
+        });
+      }
+
+      function onPlayerStateChange(event) {
+        if (event.data === YT.PlayerState.PLAYING) {
+          setInterval(() => {
+            if (player1.getCurrentTime() >= 105) {
+              player1.seekTo(startTime);
+            }
+          }, 1000);
+        }
+      }
+    </script>
   </body>
 </html>
-

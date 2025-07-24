@@ -93,7 +93,7 @@
     <script>
       let player;
       const startTime = 96; // 1:36
-      const endTime = 105;  // 1:45
+      const endTime = 110;  // 1:45
       let loopInterval;
 
       function onYouTubeIframeAPIReady() {
@@ -122,7 +122,7 @@
         if (event.data === YT.PlayerState.PLAYING) {
           clearInterval(loopInterval); // 중복 방지
           loopInterval = setInterval(() => {
-            if (player.getCurrentTime() >= endTime) {
+            if (player.getCurrentTime() >= 105) {
               player.seekTo(startTime);
             }
           }, 1000);

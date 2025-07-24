@@ -10,6 +10,26 @@
         background-color: #000;
         color: #fff;
         font-family: sans-serif;
+        scroll-behavior: smooth;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      .link-button {
+        display: inline-block;
+        padding: 12px 24px;
+        margin: 10px;
+        background-color: #333;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+      }
+
+      .link-button:hover {
+        background-color: #555;
       }
 
       .video-wrapper {
@@ -21,7 +41,7 @@
       h2 {
         text-align: center;
         font-size: 20px;
-        margin: 55px 0 0px 0
+        margin: 55px 0 0px 0;
       }
 
       .video-container {
@@ -53,10 +73,17 @@
     </style>
   </head>
   <body>
-    <h1 style="text-align:center;">제3회 전국모의고사 멀티미디어형 영상 모음(3문항)</h1>
+    <h1>제3회 전국모의고사 멀티미디어형 영상 모음 (3문항)</h1>
 
-    <!-- 영상 블록 반복 -->
-    <div class="video-wrapper">
+    <!-- ✅ 상단 인덱스 버튼 -->
+    <div style="text-align: center; margin-bottom: 40px;">
+      <a class="link-button" href="#q1">2교시 침구학 60번</a>
+      <a class="link-button" href="#q2">4교시 소아과학 11번</a>
+      <a class="link-button" href="#q3">4교시 본초학 79번</a>
+    </div>
+
+    <!-- ✅ 영상 1 -->
+    <div class="video-wrapper" id="q1">
       <hr />
       <h2>2교시 침구학 60번</h2>
       <div class="video-container">
@@ -66,9 +93,8 @@
       <hr />
     </div>
 
-
-        <!-- 영상 블록 반복 -->
-    <div class="video-wrapper">
+    <!-- ✅ 영상 2 -->
+    <div class="video-wrapper" id="q2">
       <hr />
       <h2>4교시 소아과학 11번</h2>
       <div class="video-container">
@@ -78,10 +104,8 @@
       <hr />
     </div>
 
-
-
-    <!-- 영상 블록 반복 -->
-    <div class="video-wrapper">
+    <!-- ✅ 영상 3 -->
+    <div class="video-wrapper" id="q3">
       <hr />
       <h2>4교시 본초학 79번</h2>
       <div class="video-container">
@@ -90,4 +114,6 @@
       </div>
       <hr />
     </div>
+  </body>
+</html>
 

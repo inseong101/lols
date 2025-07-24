@@ -17,12 +17,13 @@
         font-size: 22px;
         margin-bottom: 20px;
       }
+
       h3 {
         text-align: center;
         font-size: 10px;
         margin: 55px 0 0px 0;
       }
-      
+
       .video-container {
         position: relative;
         width: 100%;
@@ -32,7 +33,7 @@
         background: black;
       }
 
-      iframe {
+      #player {
         position: absolute;
         top: 0;
         left: 0;
@@ -69,12 +70,64 @@
   </head>
   <body>
     <h2>2교시 침구학 40번</h2>
+
     <div class="video-container">
       <div class="overlay"></div>
-      <iframe src="https://www.youtube.com/embed/vPCkCcvD7P8?start=96&end=105&autoplay=1&mute=1" allow="autoplay; fullscreen"></iframe>
+      <div id="player"></div>
     </div>
-    <h3>출처: <a href="https://www.youtube.com/embed/vPCkCcvD7P8?start=96&end=105&autoplay=1&mute=1" target="_blank" style="color: #4eaaff; text-decoration: underline;">https://www.youtube.com/embed/vPCkCcvD7P8?start=96&end=105&autoplay=1&mute=1</a></h3>
+
+    <h3>
+      출처:
+      <a
+        href="https://www.youtube.com/watch?v=vPCkCcvD7P8"
+        target="_blank"
+        style="color: #4eaaff; text-decoration: underline;"
+        >https://www.youtube.com/watch?v=vPCkCcvD7P8</a
+      >
+    </h3>
 
     <a class="back-link" href="index.html">← 문제 목록으로 돌아가기</a>
+
+    <!-- YouTube API script -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+      let player;
+      const startTime = 96; // 1:36
+      const endTime = 105;  // 1:45
+      let loopInterval;
+
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player("player", {
+          height: "100%",
+          width: "100%",
+          videoId: "vPCkCcvD7P8",
+          playerVars: {
+            start: startTime,
+            end: endTime,
+            rel: 0,
+            modestbranding: 1,
+            autoplay: 1,
+            mute: 1,
+            controls: 1,
+            enablejsapi: 1
+          },
+          events: {
+            onReady: (event) => event.target.playVideo(),
+            onStateChange: onPlayerStateChange
+          }
+        });
+      }
+
+      function onPlayerStateChange(event) {
+        if (event.data === YT.PlayerState.PLAYING) {
+          clearInterval(loopInterval); // 중복 방지
+          loopInterval = setInterval(() => {
+            if (player.getCurrentTime() >= endTime) {
+              player.seekTo(startTime);
+            }
+          }, 1000);
+        }
+      }
+    </script>
   </body>
 </html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>문제 영상 추가</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>문제 영상 추가</h1>
+  <form id="video-form">
+    <label>교시: <input type="text" name="period" required></label><br><br>
+    <label>과목명: <input type="text" name="subject" required></label><br><br>
+    <label>문제 번호: <input type="text" name="number" required></label><br><br>
+    <label>유튜브 링크: <input type="url" name="youtube" required></label><br><br>
+    <label>시작 초: <input type="number" name="start" required></label><br><br>
+    <label>끝 초: <input type="number" name="end" required></label><br><br>
+    <button type="submit">✅ HTML 생성 코드 복사</button>
+  </form>
+
+  <textarea id="result" rows="10" style="width:100%; margin-top:20px;" readonly></textarea>
+
+  <script>
+    document.getElementById("video-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const data = new FormData(this);
+      const id = Math.floor(Math.random() * 10000); // ID는 임시로 랜덤
+      const period = data.get("period");
+      const subject = data.get("subject");
+      const number = data.get("number");
+      const videoId = new URL(data.get("youtube")).searchParams.get("v") || data.get("youtube").split("/").pop();
+      const start = data.get("start");
+      const end = data.get("end");
+
+      const html = `<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>${period} ${subject} ${number}</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="video-wrapper">
+    <div class="video-container" data-video-id="${videoId}" data-start="${start}" data-end="${end}">
+      <div class="title-overlay">${period} ${subject} ${number}</div>
+      <div class="player-mask"><button class="replay-button">▶ 다시보기</button></div>
+      <div class="player"></div>
+    </div>
+  </div>
+  <div id="controls">
+    <button class="unmute-button">🔊 소리 켜기</button>
+  </div>
+</body>
+</html>`;
+
+      document.getElementById("result").value = html;
+    });
+  </script>
+</body>
+</html>

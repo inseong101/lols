@@ -34,22 +34,26 @@ function onYouTubeIframeAPIReady() {
             clearInterval(intervalId);
             intervalId = setInterval(() => {
               const currentTime = e.target.getCurrentTime();
+              // ✅ 영상 끝나기 1초 전에 가림막
               if (currentTime >= end - 1) {
                 mask.classList.add("show");
                 clearInterval(intervalId);
               }
             }, 300);
-          } else if (e.data === YT.PlayerState.ENDED || e.data === YT.PlayerState.PAUSED) {
+          } else if (
+            e.data === YT.PlayerState.ENDED ||
+            e.data === YT.PlayerState.PAUSED
+          ) {
             clearInterval(intervalId);
           }
         },
-      }
+      },
     });
 
     replayBtn.addEventListener("click", () => {
       player.seekTo(start);
       player.playVideo();
-      // 가림막은 1초 뒤에 사라짐
+      // ✅ 1초 뒤에 가림막 해제
       setTimeout(() => {
         mask.classList.remove("show");
       }, 1000);

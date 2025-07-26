@@ -38,185 +38,163 @@
         margin: 0 auto 40px auto;
       }
 
-      h2 {
-        text-align: center;
-        font-size: 20px;
-        margin: 55px 0 0px 0;
-      }
-      h3 {
-        text-align: center;
-        font-size: 10px;
-        margin: 55px 0 0px 0;
-      }
-
-      .video-container {
-        position: relative;
-        width: 100%;
-        padding-top: 56.25%; /* 16:9 비율 유지 */
-        background: black;
-      }
-
-      iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border: none;
-        z-index: 0;
-      }
-
-      .overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 57px; /* 제목 높이에 따라 조절 가능 */
-        background-color: black;
-        z-index: 1;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>제3회 전국모의고사 멀티미디어형 영상 모음 (3문항)</h1>
-
-    <!-- ✅ 상단 인덱스 버튼 -->
-    <div style="text-align: center; margin-bottom: 40px;">
-    <a class="link-button" href="1.html">2교시 침구학 40번</a> 
-    <a class="link-button" href="2.html">3교시 신경정신과학 20번</a> 
-    <a class="link-button" href="3.html">3교시 부인과학 79번</a> 
-    </div>
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>영상 반복 페이지</title>
-    <style>
-      body {
-        background: #000;
-        color: #fff;
-        font-family: sans-serif;
-        padding: 20px;
-      }
-      h2, h3 {
-        text-align: center;
-      }
-      .video-wrapper {
-        max-width: 720px;
-        margin: 0 auto 50px auto;
-      }
       .video-container {
         position: relative;
         width: 100%;
         padding-top: 56.25%;
         background: black;
       }
+
       .overlay {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
-        height: 60px;
-        background-color: black;
-        z-index: 1;
-      }
-      iframe, #player1 {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
         height: 100%;
+        background-color: black;
+        z-index: 2;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+      }
+
+      .replay-button {
+        padding: 12px 24px;
+        font-size: 18px;
+        background-color: #4eaaff;
+        color: white;
         border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+
+      h2 {
+        text-align: center;
+        font-size: 20px;
+        margin-top: 55px;
+      }
+
+      h3 {
+        text-align: center;
+        font-size: 10px;
+        margin-top: 15px;
       }
     </style>
   </head>
   <body>
+    <h1>제3회 전국모의고사 멀티미디어형 영상 모음 (3문항)</h1>
 
-    <!-- ✅ 영상 1 (loop) -->
-    <div class="video-wrapper" id="q2">
-      <hr />
+    <!-- 상단 인덱스 버튼 -->
+    <div style="text-align: center; margin-bottom: 40px;">
+      <a class="link-button" href="#q1">2교시 침구학 40번</a> 
+      <a class="link-button" href="#q2">3교시 신경정신과학 20번</a> 
+      <a class="link-button" href="#q3">3교시 부인과학 79번</a> 
+    </div>
+
+    <!-- ✅ 영상들 -->
+    <div class="video-wrapper" id="q1">
       <h2>2교시 침구학 40번</h2>
-      <div class="video-container">
-        <div class="overlay"></div>
-        <div id="player1"></div> <!-- player1으로 바꿈 -->
+      <div class="video-container" data-video-id="vPCkCcvD7P8" data-start="96" data-end="106">
+        <div class="overlay">
+          <button class="replay-button">다시보기</button>
+        </div>
+        <div class="player"></div>
       </div>
-      <h3>출처: 
-        <a href="https://www.youtube.com/watch?v=vPCkCcvD7P8" target="_blank" style="color: #4eaaff; text-decoration: underline;">
+      <h3>
+        출처:
+        <a href="https://www.youtube.com/watch?v=vPCkCcvD7P8" target="_blank" style="color:#4eaaff;">
           https://www.youtube.com/watch?v=vPCkCcvD7P8
         </a>
       </h3>
-      <hr />
     </div>
 
-    <!-- ✅ 영상 2 -->
-    <div class="video-wrapper" id="q1">
-      <hr />
+    <div class="video-wrapper" id="q2">
       <h2>3교시 신경정신과학 20번</h2>
-      <div class="video-container">
-        <div class="overlay"></div>
-        <iframe src="https://www.youtube.com/embed/N65GS4iTyhs?rel=0&modestbranding=1&showinfo=0" allowfullscreen></iframe>
+      <div class="video-container" data-video-id="N65GS4iTyhs" data-start="10" data-end="20">
+        <div class="overlay">
+          <button class="replay-button">다시보기</button>
+        </div>
+        <div class="player"></div>
       </div>
-      <h3>출처: 
-        <a href="https://www.youtube.com/watch?v=N65GS4iTyhs" target="_blank" style="color: #4eaaff; text-decoration: underline;">
+      <h3>
+        출처:
+        <a href="https://www.youtube.com/watch?v=N65GS4iTyhs" target="_blank" style="color:#4eaaff;">
           https://www.youtube.com/watch?v=N65GS4iTyhs
         </a>
       </h3>
-      <hr />
     </div>
 
-    <!-- ✅ 영상 3 -->
     <div class="video-wrapper" id="q3">
-      <hr />
       <h2>3교시 부인과학 79번</h2>
-      <div class="video-container">
-        <div class="overlay"></div>
-        <iframe src="https://www.youtube.com/embed/nM91dHAwcr8?rel=0&modestbranding=1&showinfo=0" allowfullscreen></iframe>
+      <div class="video-container" data-video-id="nM91dHAwcr8" data-start="5" data-end="15">
+        <div class="overlay">
+          <button class="replay-button">다시보기</button>
+        </div>
+        <div class="player"></div>
       </div>
-      <h3>출처: 
-        <a href="https://www.youtube.com/watch?v=nM91dHAwcr8" target="_blank" style="color: #4eaaff; text-decoration: underline;">
+      <h3>
+        출처:
+        <a href="https://www.youtube.com/watch?v=nM91dHAwcr8" target="_blank" style="color:#4eaaff;">
           https://www.youtube.com/watch?v=nM91dHAwcr8
         </a>
       </h3>
-      <hr />
     </div>
 
-    <!-- ✅ YouTube IFrame API 및 1번 영상 loop 스크립트 -->
+    <!-- ✅ 유튜브 API + 공통 스크립트 -->
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-      let player1;
-      const startTime = 96;
-      const endTime = 110;
+      const players = [];
+      let playerCount = 0;
 
       function onYouTubeIframeAPIReady() {
-        player1 = new YT.Player("player1", {
-          videoId: "vPCkCcvD7P8",
-          playerVars: {
-            start: startTime,
-            end: endTime,
-            rel: 0,
-            modestbranding: 1,
-            autoplay: 1,
-            mute: 1,
-            controls: 1,
-            enablejsapi: 1
-          },
-          events: {
-            onReady: (event) => event.target.playVideo(),
-            onStateChange: onPlayerStateChange
-          }
+        const containers = document.querySelectorAll(".video-container");
+
+        containers.forEach((container, index) => {
+          const videoId = container.dataset.videoId;
+          const start = parseInt(container.dataset.start);
+          const end = parseInt(container.dataset.end);
+          const playerDiv = container.querySelector(".player");
+
+          const player = new YT.Player(playerDiv, {
+            videoId: videoId,
+            playerVars: {
+              start: start,
+              end: end,
+              rel: 0,
+              modestbranding: 1,
+              autoplay: 1,
+              mute: 1,
+              controls: 1,
+              enablejsapi: 1
+            },
+            events: {
+              onReady: (event) => event.target.playVideo(),
+              onStateChange: (event) => {
+                if (event.data === YT.PlayerState.ENDED) {
+                  container.querySelector(".overlay").style.display = "flex";
+                }
+              }
+            }
+          });
+
+          players.push({ player, start, container });
         });
       }
 
-      function onPlayerStateChange(event) {
-        if (event.data === YT.PlayerState.PLAYING) {
-          setInterval(() => {
-            if (player1.getCurrentTime() >= 105) {
-              player1.seekTo(startTime);
-            }
-          }, 1000);
+      // 다시보기 버튼 이벤트 위임
+      document.addEventListener("click", function (e) {
+        if (e.target && e.target.classList.contains("replay-button")) {
+          const overlay = e.target.closest(".overlay");
+          const container = overlay.closest(".video-container");
+          const playerIndex = Array.from(document.querySelectorAll(".video-container")).indexOf(container);
+          const { player, start } = players[playerIndex];
+
+          overlay.style.display = "none";
+          player.seekTo(start);
+          player.playVideo();
         }
-      }
+      });
     </script>
   </body>
 </html>

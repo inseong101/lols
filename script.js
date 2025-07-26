@@ -51,11 +51,20 @@ function onYouTubeIframeAPIReady() {
     players.push(player);
   });
 
-  // 소리 켜기 버튼 처리
+  // ✅ 소리 켜기 / 끄기 토글
   const unmuteBtn = document.querySelector(".unmute-button");
   if (unmuteBtn) {
+    let isMuted = true;
     unmuteBtn.addEventListener("click", () => {
-      players.forEach(p => p.unMute());
+      isMuted = !isMuted;
+      players.forEach(p => {
+        if (isMuted) {
+          p.mute();
+        } else {
+          p.unMute();
+        }
+      });
+      unmuteBtn.textContent = isMuted ? "🔊 소리 켜기" : "🔇 소리 끄기";
     });
   }
 }

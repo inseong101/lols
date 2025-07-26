@@ -74,11 +74,18 @@ h1 {
   position: absolute;
   top: 0;
   left: 0;
-  height: 62px;
+  height: 62px; /* 영상 상단 가리기 */
   width: 100%;
   background-color: black;
   z-index: 2;
   pointer-events: none;
+
+  display: flex;               /* 정렬을 위해 flex 사용 */
+  align-items: center;         /* 세로 가운데 */
+  justify-content: center;     /* 가로 가운데 */
+  font-size: 18px;             /* 원하는 크기 */
+  font-weight: bold;
+  color: white;
 }
 
 /* ✅ 다시보기 버튼 오버레이 */

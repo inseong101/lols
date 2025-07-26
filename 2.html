@@ -1,78 +1,22 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>3교시 신경정신과학 20번</title>
-    <style>
-      body {
-        margin: 0;
-        padding: 20px;
-        background-color: #000;
-        color: #fff;
-        font-family: sans-serif;
-        text-align: center;
-      }
-
-      h2 {
-        font-size: 22px;
-        margin-bottom: 20px;
-      }
-      h3 {
-        text-align: center;
-        font-size: 10px;
-        margin: 55px 0 0px 0;
-      }
-      .video-container {
-        position: relative;
-        width: 100%;
-        max-width: 720px;
-        margin: 0 auto;
-        padding-top: 56.25%; /* 16:9 */
-        background: black;
-      }
-
-      iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border: none;
-        z-index: 0;
-      }
-
-      .overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 60px;
-        background-color: black;
-        z-index: 1;
-      }
-
-      .back-link {
-        display: inline-block;
-        margin-top: 40px;
-        padding: 10px 20px;
-        background: #444;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-      }
-
-      .back-link:hover {
-        background: #666;
-      }
-    </style>
-  </head>
-  <body>
-    <h2>3교시 신경정신과학 20번</h2>
-    <div class="video-container">
-      <div class="overlay"></div>
-      <iframe src="https://www.youtube.com/embed/N65GS4iTyhs?rel=0&modestbranding=1&showinfo=0&autoplay=1" allow="autoplay; fullscreen"></iframe>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>3교시 신경정신과학 20번</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="video-wrapper">
+    <div class="video-container" data-video-id="N65GS4iTyhs" data-start="29" data-end="58">
+      <div class="title-overlay">2교시 침구학 40번</div>
+      <div class="player-mask"><button class="replay-button">▶ 다시보기</button></div>
+      <div class="player"></div>
     </div>
-    <h3>출처: <a href="https://www.youtube.com/watch?v=N65GS4iTyhs" target="_blank" style="color: #4eaaff; text-decoration: underline;">https://www.youtube.com/watch?v=N65GS4iTyhs</a></h3>
-    <a class="back-link" href="index.html">← 문제 목록으로 돌아가기</a>
-  </body>
+  </div>
+  <div id="controls">
+    <button class="unmute-button">🔊 소리 켜기</button>
+  </div>
+</body>
 </html>

@@ -3,9 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <title>2교시 침구학 40번</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <script src="script.js" defer></script>
+  <script>
+    const now = new Date().getTime();
+    const head = document.getElementsByTagName('head')[0];
+
+    const css = document.createElement('link');
+    css.rel = 'stylesheet';
+    css.href = `style.css?v=${now}`;
+    head.appendChild(css);
+
+    const yt = document.createElement('script');
+    yt.src = 'https://www.youtube.com/iframe_api';
+    head.appendChild(yt);
+
+    const js = document.createElement('script');
+    js.src = `script.js?v=${now}`;
+    js.defer = true;
+    head.appendChild(js);
+  </script>
 </head>
 <body>
   <div class="video-wrapper">

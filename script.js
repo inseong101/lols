@@ -1,90 +1,114 @@
-let players = [];
-let currentSlide = 0;
-
-function onYouTubeIframeAPIReady() {
-  document.querySelectorAll(".video-container").forEach((container, index) => {
-    const videoId = container.dataset.videoId;
-    const start = parseInt(container.dataset.start || "0");
-    const end = parseInt(container.dataset.end || "9999");
-
-    const playerDiv = container.querySelector(".player");
-    const overlay = document.createElement("div");
-    overlay.className = "overlay-full";
-    const button = document.createElement("button");
-    button.className = "replay-button";
-    button.innerText = "▶ 다시보기";
-    overlay.appendChild(button);
-    container.appendChild(overlay);
-
-    const player = new YT.Player(playerDiv, {
-      videoId: videoId,
-      playerVars: {
-        autoplay: 1,
-        mute: 1,
-        controls: 1,
-        rel: 0,
-        modestbranding: 1,
-        start: start,
-        end: end,
-        enablejsapi: 1,
-      },
-      events: {
-        onReady: (e) => e.target.playVideo(),
-        onStateChange: (e) => {
-          if (e.data === YT.PlayerState.ENDED) {
-            overlay.classList.add("show");
-          }
-        },
-      },
-    });
-
-    button.addEventListener("click", () => {
-      overlay.classList.remove("show");
-      setTimeout(() => {
-        player.seekTo(start);
-        player.playVideo();
-      }, 1000);
-    });
-
-    players.push(player);
-  });
+body {
+  margin: 0;
+  padding: 20px;
+  background-color: #000;
+  color: #fff;
+  font-family: sans-serif;
+  scroll-behavior: smooth;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  // index button 자동 생성
-  const buttons = document.getElementById("index-buttons");
-  document.querySelectorAll(".slide").forEach((slide, i) => {
-    const b = document.createElement("button");
-    b.textContent = `${i + 1}번`;
-    b.className = "link-button";
-    b.onclick = () => showSlide(i);
-    buttons.appendChild(b);
-  });
-
-  // 음소거 해제 버튼
-  const unmute = document.querySelector(".unmute-button");
-  if (unmute) {
-    unmute.addEventListener("click", () => {
-      players.forEach(p => p.unMute());
-    });
-  }
-});
-
-function showSlide(n) {
-  const slides = document.querySelectorAll(".slide");
-  slides.forEach((slide, i) => {
-    slide.classList.toggle("active-slide", i === n);
-  });
-  currentSlide = n;
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-function prevSlide() {
-  const slides = document.querySelectorAll(".slide");
-  showSlide((currentSlide - 1 + slides.length) % slides.length);
+.link-button {
+  display: inline-block;
+  padding: 12px 24px;
+  margin: 10px;
+  background-color: #333;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
 }
 
-function nextSlide() {
-  const slides = document.querySelectorAll(".slide");
-  showSlide((currentSlide + 1) % slides.length);
+.link-button:hover {
+  background-color: #555;
 }
 
+.video-wrapper {
+  max-width: 720px;
+  margin: 0 auto 40px auto;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 */
+  background: black;
+  margin-bottom: 10px;
+}
+
+.player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.player-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 60px;
+  width: 100%;
+  background: black;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mask-label {
+  font-size: 18px;
+  color: white;
+}
+
+.overlay-full {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: black;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.overlay-full.show {
+  display: flex;
+}
+
+.replay-button {
+  background: #fff;
+  color: #000;
+  font-size: 20px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.unmute-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-top: 10px;
+  background-color: #4eaaff;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.slide {
+  display: none;
+}
+
+.slide.active-slide {
+  display: block;
+}

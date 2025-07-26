@@ -1,21 +1,23 @@
-/* 기본 설정 */
 html, body {
   margin: 0;
   padding: 0;
   background-color: #000;
   color: #fff;
   font-family: sans-serif;
-  scroll-behavior: smooth;
   overflow: hidden;
   height: 100vh;
 }
 
 h1 {
   text-align: center;
-  margin: 20px 0 10px 0;
+  margin: 15px 0;
 }
 
-/* 상단 인덱스 버튼 */
+#index-buttons {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
 .link-button {
   display: inline-block;
   padding: 10px 20px;
@@ -29,79 +31,75 @@ h1 {
   background-color: #555;
 }
 
-#index-buttons {
-  text-align: center;
-  margin-bottom: 10px;
-}
-
 /* 슬라이드 영역 */
 .slide {
   display: none;
-  height: calc(100vh - 100px);
-  padding: 20px;
+  height: calc(100vh - 80px);
+  padding: 0;
   box-sizing: border-box;
 }
 .active-slide {
   display: block;
 }
 
-/* 영상 플레이어 */
+/* 영상 전체 확대 */
 .video-wrapper {
-  max-width: 720px;
+  width: 100vw;
+  height: calc(100vh - 100px);
   margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
 }
+
 .video-container {
   position: relative;
   width: 100%;
-  padding-top: 56.25%;
+  height: 100%;
   background: black;
-  overflow: hidden; /* ✅ 영상 밖으로 나간 가리개 잘라냄 */
+  overflow: hidden;
 }
-
-.video-container .player {
+.video-container .player,
+.video-container iframe {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  border: none;
   z-index: 1;
 }
 
-.video-container iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-/* ✅ 유튜브 상단 제목 가리기용 검정 박스 */
+/* ✅ 유튜브 상단 가리기 (기존보다 2px 높게) */
 .player-mask {
   position: absolute;
   top: 0;
   left: 0;
+  height: 62px;
   width: 100%;
-  height: 13%; /* 영상 높이 기준. 필요시 조절 */
   background-color: black;
-  z-index: 2; /* 반드시 player보다 위 */
+  z-index: 2;
   pointer-events: none;
 }
 
-
-/* ✅ 영상 종료 시 전체 덮는 다시보기 화면 */
+/* ✅ 다시보기 버튼 오버레이 */
 .overlay-full {
   position: absolute;
   top: 0;
   left: 0;
+  background-color: black;
   width: 100%;
   height: 100%;
-  background-color: black;
   z-index: 3;
   display: none;
   justify-content: center;
   align-items: center;
 }
+.overlay-full.show {
+  display: flex;
+}
 .replay-button {
-  padding: 12px 24px;
-  font-size: 18px;
+  padding: 14px 30px;
+  font-size: 20px;
   background-color: #4eaaff;
   color: white;
   border: none;
@@ -109,7 +107,7 @@ h1 {
   cursor: pointer;
 }
 
-/* 슬라이드 컨트롤 버튼 */
+/* 슬라이드 컨트롤 */
 #slide-controls {
   position: absolute;
   bottom: 10px;

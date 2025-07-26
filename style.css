@@ -67,23 +67,26 @@ h1 {
   position: absolute;
   top: 0;
   left: 0;
-  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
   width: 100%;
-  background-color: black;
-  z-index: 3;
+  height: 100%;
   display: none;
+  z-index: 10;
   justify-content: center;
   align-items: center;
-  transition: opacity 0.3s;
+}
+
+.player-mask.show {
+  display: flex;
 }
 
 .replay-button {
-  background: white;
-  color: black;
-  font-size: 20px;
-  padding: 14px 28px;
+  font-size: 24px;
+  padding: 16px 32px;
+  background-color: #444;
   border: none;
   border-radius: 8px;
+  color: white;
   cursor: pointer;
 }
 

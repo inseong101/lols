@@ -1,63 +1,37 @@
-html, body {
+body {
   margin: 0;
-  padding: 0;
+  padding: 20px;
   background-color: #000;
   color: #fff;
   font-family: sans-serif;
-  overflow: hidden;
-  height: 100vh;
+  scroll-behavior: smooth;
 }
 
 h1 {
   text-align: center;
-  margin: 15px 0;
+  margin-bottom: 30px;
 }
 
-#index-buttons {
+h2 {
   text-align: center;
-  margin-bottom: 10px;
+  margin-top: 40px;
 }
 
-.link-button {
-  display: inline-block;
-  padding: 10px 20px;
-  margin: 4px;
-  background-color: #333;
-  color: white;
-  text-decoration: none;
-  border-radius: 6px;
-}
-.link-button:hover {
-  background-color: #555;
-}
-
-/* 슬라이드 영역 */
-.slide {
-  display: none;
-  height: calc(100vh - 80px);
-  padding: 0;
-  box-sizing: border-box;
-}
-.active-slide {
-  display: block;
-}
-
-/* 영상 전체 확대 */
 .video-wrapper {
-  width: 100%;
-  max-width: 960px;   /* 적절한 크기로 제한 */
+  max-width: 960px;
   margin: 0 auto;
-  padding: 20px 0;
 }
 
 .video-container {
   position: relative;
   width: 100%;
-  height: 100%;
+  padding-top: 56.25%;
   background: black;
   overflow: hidden;
+  margin-bottom: 20px;
 }
-.video-container .player,
+
+.player,
 .video-container iframe {
   position: absolute;
   top: 0;
@@ -68,68 +42,87 @@ h1 {
   z-index: 1;
 }
 
-/* ✅ 유튜브 상단 가리기 (기존보다 2px 높게) */
 .player-mask {
   position: absolute;
   top: 0;
   left: 0;
-  height: 62px; /* 영상 상단 가리기 */
+  height: 62px; /* 영상 제목 가리기 */
   width: 100%;
   background-color: black;
   z-index: 2;
   pointer-events: none;
-
-  display: flex;               /* 정렬을 위해 flex 사용 */
-  align-items: center;         /* 세로 가운데 */
-  justify-content: center;     /* 가로 가운데 */
-  font-size: 18px;             /* 원하는 크기 */
-  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: white;
+  font-weight: bold;
+  font-size: 16px;
 }
 
-/* ✅ 다시보기 버튼 오버레이 */
 .overlay-full {
   position: absolute;
   top: 0;
   left: 0;
-  background-color: black;
-  width: 100%;
   height: 100%;
+  width: 100%;
+  background-color: black;
   z-index: 3;
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
+  transition: opacity 0.5s;
+  opacity: 0;
+  pointer-events: none;
 }
+
 .overlay-full.show {
-  display: flex;
+  opacity: 1;
+  pointer-events: auto;
 }
+
 .replay-button {
-  padding: 14px 30px;
-  font-size: 20px;
-  background-color: #4eaaff;
+  background-color: #444;
   color: white;
+  padding: 12px 24px;
+  font-size: 18px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
-/* 슬라이드 컨트롤 */
-#slide-controls {
-  position: absolute;
-  bottom: 10px;
-  width: 100%;
-  text-align: center;
-}
-#slide-controls button {
-  margin: 0 10px;
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #444;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-#slide-controls button:hover {
+.replay-button:hover {
   background-color: #666;
 }
+
+.slide {
+  display: none;
+}
+
+.active-slide {
+  display: block;
+}
+
+#index-buttons {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#index-buttons .link-button {
+  display: inline-block;
+  padding: 12px 24px;
+  margin: 10px;
+  background-color: #333;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+#index-buttons .link-button:hover {
+  background-color: #555;
+}
+
+#slide-controls {
+  text-align: center;
+  margin-top: 40px;
+}
+

@@ -34,6 +34,7 @@ function onYouTubeIframeAPIReady() {
             clearInterval(intervalId);
             intervalId = setInterval(() => {
               const currentTime = e.target.getCurrentTime();
+              // ✅ 영상 끝나기 1초 전에 가림막
               if (currentTime >= end - 1) {
                 mask.classList.add("show");
                 clearInterval(intervalId);
@@ -52,9 +53,10 @@ function onYouTubeIframeAPIReady() {
     replayBtn.addEventListener("click", () => {
       player.seekTo(start);
       player.playVideo();
+      // ✅ 1초 뒤에 가림막 해제
       setTimeout(() => {
         mask.classList.remove("show");
-      }, 500); // ✅ 0.5초 뒤 가림막 제거
+      }, 1000);
     });
 
     players.push(player);
@@ -73,3 +75,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+

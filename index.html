@@ -80,7 +80,8 @@
       height: 60px;
       width: 100%;
       background-color: black;
-      z-index: 2;
+      z-index: 5;
+      pointer-events: none;
     }
 
     .overlay-full {
@@ -90,7 +91,7 @@
       width: 100%;
       height: 100%;
       background-color: black;
-      z-index: 3;
+      z-index: 4;
       display: none;
       justify-content: center;
       align-items: center;
@@ -146,7 +147,6 @@
   <div id="index-buttons"></div>
 
   <div id="slides-container">
-
     <!-- ✅ Slide 1 -->
     <div class="slide active-slide video-wrapper" id="q1">
       <h2>2교시 침구학 40번</h2>
@@ -187,7 +187,7 @@
     </div>
   </div>
 
-  <!-- ✅ 슬라이드 컨트롤 -->
+  <!-- ✅ 슬라이드 전환 버튼 -->
   <div id="slide-controls">
     <button onclick="prevSlide()">이전</button>
     <button onclick="nextSlide()">다음</button>
@@ -241,7 +241,6 @@
       });
     }
 
-    // ✅ 다시보기 버튼
     document.addEventListener("click", function (e) {
       if (e.target && e.target.classList.contains("replay-button")) {
         const overlay = e.target.closest(".overlay-full");
@@ -254,7 +253,6 @@
       }
     });
 
-    // ✅ 슬라이드 전환
     function showSlide(index) {
       slides.forEach((slide, i) => {
         slide.classList.toggle("active-slide", i === index);
@@ -275,7 +273,6 @@
       }
     }
 
-    // ✅ 자동 인덱스 버튼 생성
     window.addEventListener("DOMContentLoaded", () => {
       const wrappers = document.querySelectorAll(".video-wrapper");
       const indexDiv = document.getElementById("index-buttons");
@@ -301,3 +298,4 @@
   </script>
 </body>
 </html>
+

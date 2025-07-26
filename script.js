@@ -53,10 +53,10 @@ function onYouTubeIframeAPIReady() {
     replayBtn.addEventListener("click", () => {
       player.seekTo(start);
       player.playVideo();
-      // ✅ 1초 뒤에 가림막 해제
+      // ✅ 0.5초 뒤에 가림막 해제
       setTimeout(() => {
         mask.classList.remove("show");
-      }, 1000);
+      }, 500);
     });
 
     players.push(player);

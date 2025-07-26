@@ -63,12 +63,12 @@ function initPlayers() {
       players.forEach((p) => {
         if (p.unMute) p.unMute();
       });
-      unmuteBtn.innerText = "🔇 소리 끄기";
+      unmuteBtn.innerText = "🔇 소리 끄기(현재는 소리가 ON 상태임)";
       unmuteBtn.onclick = () => {
         players.forEach((p) => {
           if (p.mute) p.mute();
         });
-        unmuteBtn.innerText = "🔊 소리 켜기";
+        unmuteBtn.innerText = "🔊 소리 켜기(현재는 소리가 OFF 상태임)";
         initPlayers(); // 다시 버튼 연결
       };
     });

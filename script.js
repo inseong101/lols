@@ -1,14 +1,16 @@
 let players = [];
 
-function onYouTubeIframeAPIReady() {
-  document.querySelectorAll(".video-container").forEach((container) => {
+function initPlayers() {
+  document.querySelectorAll(".video-container").forEach((container, index) => {
     const videoId = container.dataset.videoId;
     const start = parseInt(container.dataset.start || "0");
     const end = parseInt(container.dataset.end || "9999");
-
     const playerDiv = container.querySelector(".player");
-    const overlay = container.querySelector(".player-mask");
-    const button = container.querySelector(".replay-button");
+    const mask = container.querySelector(".player-mask");
+    const replayButton = mask.querySelector(".replay-button");
+
+    // 가림막 초기 상태: 숨김
+    mask.classList.remove("show");
 
     const player = new YT.Player(playerDiv, {
       videoId: videoId,
@@ -28,11 +30,15 @@ function onYouTubeIframeAPIReady() {
         },
         onStateChange: (e) => {
           if (e.data === YT.PlayerState.PLAYING) {
+            // 영상 끝 1초 전에 가림막 표시
             const interval = setInterval(() => {
-              const currentTime = player.getCurrentTime();
-              if (currentTime >= end - 1) {
+              if (
+                player.getCurrentTime &&
+                player.getDuration &&
+                player.getCurrentTime() >= end - 1
+              ) {
+                mask.classList.add("show");
                 clearInterval(interval);
-                overlay.classList.add("show");
               }
             }, 500);
           }
@@ -40,32 +46,45 @@ function onYouTubeIframeAPIReady() {
       },
     });
 
-    button.addEventListener("click", () => {
+    replayButton.addEventListener("click", () => {
       player.seekTo(start);
       player.playVideo();
       setTimeout(() => {
-        overlay.classList.remove("show");
+        mask.classList.remove("show");
       }, 1000);
     });
 
     players.push(player);
   });
 
-  // ✅ 소리 켜기 / 끄기 토글
   const unmuteBtn = document.querySelector(".unmute-button");
   if (unmuteBtn) {
-    let isMuted = true;
     unmuteBtn.addEventListener("click", () => {
-      isMuted = !isMuted;
-      players.forEach(p => {
-        if (isMuted) {
-          p.mute();
-        } else {
-          p.unMute();
-        }
+      players.forEach((p) => {
+        if (p.unMute) p.unMute();
       });
-      unmuteBtn.textContent = isMuted ? "🔊 소리 켜기" : "🔇 소리 끄기";
+      unmuteBtn.innerText = "🔇 소리 끄기";
+      unmuteBtn.onclick = () => {
+        players.forEach((p) => {
+          if (p.mute) p.mute();
+        });
+        unmuteBtn.innerText = "🔊 소리 켜기";
+        initPlayers(); // 다시 버튼 연결
+      };
     });
   }
 }
+
+// ✅ 안정적으로 API 로드될 때까지 대기
+function waitForYouTubeAPI(callback) {
+  if (window.YT && YT.Player) {
+    callback();
+  } else {
+    setTimeout(() => waitForYouTubeAPI(callback), 100);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  waitForYouTubeAPI(initPlayers);
+});
 

@@ -7,10 +7,8 @@ function onYouTubeIframeAPIReady() {
     const end = parseInt(container.dataset.end || "9999");
 
     const playerDiv = container.querySelector(".player");
-    const mask = container.querySelector(".player-mask");
-    const replayBtn = mask.querySelector(".replay-button");
-
-    let intervalId;
+    const overlay = container.querySelector(".player-mask");
+    const button = container.querySelector(".replay-button");
 
     const player = new YT.Player(playerDiv, {
       videoId: videoId,
@@ -27,52 +25,38 @@ function onYouTubeIframeAPIReady() {
       events: {
         onReady: (e) => {
           e.target.playVideo();
-          mask.classList.remove("show");
         },
         onStateChange: (e) => {
           if (e.data === YT.PlayerState.PLAYING) {
-            clearInterval(intervalId);
-            intervalId = setInterval(() => {
-              const currentTime = e.target.getCurrentTime();
-              // ✅ 영상 끝나기 1초 전에 가림막
+            const interval = setInterval(() => {
+              const currentTime = player.getCurrentTime();
               if (currentTime >= end - 1) {
-                mask.classList.add("show");
-                clearInterval(intervalId);
+                clearInterval(interval);
+                overlay.classList.add("show");
               }
-            }, 300);
-          } else if (
-            e.data === YT.PlayerState.ENDED ||
-            e.data === YT.PlayerState.PAUSED
-          ) {
-            clearInterval(intervalId);
+            }, 500);
           }
         },
       },
     });
 
-    replayBtn.addEventListener("click", () => {
+    button.addEventListener("click", () => {
       player.seekTo(start);
       player.playVideo();
-      // ✅ 0.5초 뒤에 가림막 해제
       setTimeout(() => {
-        mask.classList.remove("show");
-      }, 500);
+        overlay.classList.remove("show");
+      }, 1000);
     });
 
     players.push(player);
   });
-}
 
-document.addEventListener("DOMContentLoaded", () => {
+  // 소리 켜기 버튼 처리
   const unmuteBtn = document.querySelector(".unmute-button");
   if (unmuteBtn) {
     unmuteBtn.addEventListener("click", () => {
-      players.forEach((p) => {
-        if (typeof p.unMute === "function") {
-          p.unMute();
-        }
-      });
+      players.forEach(p => p.unMute());
     });
   }
-});
+}
 

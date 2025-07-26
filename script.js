@@ -1,5 +1,4 @@
 let players = [];
-let currentSlide = 0;
 
 function onYouTubeIframeAPIReady() {
   document.querySelectorAll(".video-container").forEach((container, index) => {
@@ -8,13 +7,8 @@ function onYouTubeIframeAPIReady() {
     const end = parseInt(container.dataset.end || "9999");
 
     const playerDiv = container.querySelector(".player");
-    const overlay = document.createElement("div");
-    overlay.className = "overlay-full";
-    const button = document.createElement("button");
-    button.className = "replay-button";
-    button.innerText = "▶ 다시보기";
-    overlay.appendChild(button);
-    container.appendChild(overlay);
+    const overlay = container.querySelector(".player-mask");
+    const button = overlay.querySelector(".replay-button");
 
     const player = new YT.Player(playerDiv, {
       videoId: videoId,
@@ -29,10 +23,20 @@ function onYouTubeIframeAPIReady() {
         enablejsapi: 1,
       },
       events: {
-        onReady: (e) => e.target.playVideo(),
+        onReady: (e) => {
+          e.target.playVideo();
+          setTimeout(() => {
+            overlay.classList.remove("show");
+          }, 1000);
+        },
         onStateChange: (e) => {
-          if (e.data === YT.PlayerState.ENDED) {
-            overlay.classList.add("show");
+          if (e.data === YT.PlayerState.PLAYING) {
+            const checkTime = setInterval(() => {
+              if (player.getCurrentTime() >= end - 1) {
+                overlay.classList.add("show");
+                clearInterval(checkTime);
+              }
+            }, 500);
           }
         },
       },
@@ -51,28 +55,14 @@ function onYouTubeIframeAPIReady() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const buttons = document.getElementById("index-buttons");
-  document.querySelectorAll(".slide").forEach((slide, i) => {
-    const b = document.createElement("button");
-    b.textContent = `${i + 1}번`;
-    b.className = "link-button";
-    b.onclick = () => showSlide(i);
-    buttons.appendChild(b);
-  });
-
   const unmute = document.querySelector(".unmute-button");
   if (unmute) {
     unmute.addEventListener("click", () => {
-      players.forEach(p => p.unMute());
+      players.forEach(p => {
+        if (p.unMute) p.unMute();
+      });
     });
   }
 });
 
-function showSlide(n) {
-  const slides = document.querySelectorAll(".slide");
-  slides.forEach((slide, i) => {
-    slide.classList.toggle("active-slide", i === n);
-  });
-  currentSlide = n;
-}
 

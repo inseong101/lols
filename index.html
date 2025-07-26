@@ -1,153 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>제3회 전국모의고사 멀티미디어형 영상 모음</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      background-color: #000;
-      color: #fff;
-      font-family: sans-serif;
-      scroll-behavior: smooth;
-      overflow: hidden;
-      height: 100vh;
-    }
-
-    h1 {
-      text-align: center;
-      margin: 20px 0 10px 0;
-    }
-
-    .link-button {
-      display: inline-block;
-      padding: 10px 20px;
-      margin: 4px;
-      background-color: #333;
-      color: white;
-      text-decoration: none;
-      border-radius: 6px;
-    }
-
-    .link-button:hover {
-      background-color: #555;
-    }
-
-    #index-buttons {
-      text-align: center;
-      margin-bottom: 10px;
-    }
-
-    .slide {
-      display: none;
-      height: calc(100vh - 100px);
-      padding: 20px;
-      box-sizing: border-box;
-    }
-
-    .active-slide {
-      display: block;
-    }
-
-    .video-wrapper {
-      max-width: 720px;
-      margin: 0 auto;
-    }
-
-    .video-container {
-      position: relative;
-      width: 100%;
-      padding-top: 56.25%;
-      background: black;
-    }
-
-    .video-container iframe,
-    .video-container .player {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-      z-index: 1;
-    }
-
-    .overlay-top {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 60px;
-      width: 100%;
-      background-color: black;
-      z-index: 5;
-      pointer-events: none;
-    }
-
-    .overlay-full {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: black;
-      z-index: 4;
-      display: none;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .replay-button {
-      padding: 12px 24px;
-      font-size: 18px;
-      background-color: #4eaaff;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    h2 {
-      text-align: center;
-      font-size: 20px;
-      margin-top: 10px;
-    }
-
-    h3 {
-      text-align: center;
-      font-size: 10px;
-      margin-top: 10px;
-    }
-
-    #slide-controls {
-      position: absolute;
-      bottom: 10px;
-      width: 100%;
-      text-align: center;
-    }
-
-    #slide-controls button {
-      margin: 0 10px;
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #444;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    #slide-controls button:hover {
-      background-color: #666;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
   <h1>제3회 전국모의고사 멀티미디어형 영상 모음</h1>
   <div id="index-buttons"></div>
 
   <div id="slides-container">
-    <!-- ✅ Slide 1 -->
+    <!-- Slide 1 -->
     <div class="slide active-slide video-wrapper" id="q1">
       <h2>2교시 침구학 40번</h2>
       <div class="video-container" data-video-id="vPCkCcvD7P8" data-start="96" data-end="106">
@@ -157,10 +22,9 @@
         </div>
         <div class="player"></div>
       </div>
-      <h3><a href="https://www.youtube.com/watch?v=vPCkCcvD7P8" target="_blank" style="color: #4eaaff;">출처: https://www.youtube.com/watch?v=vPCkCcvD7P8</a></h3>
     </div>
 
-    <!-- ✅ Slide 2 -->
+    <!-- Slide 2 -->
     <div class="slide video-wrapper" id="q2">
       <h2>3교시 신경정신과학 20번</h2>
       <div class="video-container" data-video-id="N65GS4iTyhs" data-start="10" data-end="20">
@@ -170,10 +34,9 @@
         </div>
         <div class="player"></div>
       </div>
-      <h3><a href="https://www.youtube.com/watch?v=N65GS4iTyhs" target="_blank" style="color: #4eaaff;">출처: https://www.youtube.com/watch?v=N65GS4iTyhs</a></h3>
     </div>
 
-    <!-- ✅ Slide 3 -->
+    <!-- Slide 3 -->
     <div class="slide video-wrapper" id="q3">
       <h2>3교시 부인과학 79번</h2>
       <div class="video-container" data-video-id="nM91dHAwcr8" data-start="5" data-end="15">
@@ -183,119 +46,13 @@
         </div>
         <div class="player"></div>
       </div>
-      <h3><a href="https://www.youtube.com/watch?v=nM91dHAwcr8" target="_blank" style="color: #4eaaff;">출처: https://www.youtube.com/watch?v=nM91dHAwcr8</a></h3>
     </div>
   </div>
 
-  <!-- ✅ 슬라이드 전환 버튼 -->
   <div id="slide-controls">
     <button onclick="prevSlide()">이전</button>
     <button onclick="nextSlide()">다음</button>
   </div>
-
-  <!-- ✅ YouTube API + JS -->
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <script>
-    const players = [];
-    let currentSlide = 0;
-    const slides = document.querySelectorAll(".slide");
-
-    function onYouTubeIframeAPIReady() {
-      const containers = document.querySelectorAll(".video-container");
-
-      containers.forEach((container, idx) => {
-        const videoId = container.dataset.videoId;
-        const start = parseInt(container.dataset.start);
-        const end = parseInt(container.dataset.end);
-        const playerDiv = container.querySelector(".player");
-
-        const player = new YT.Player(playerDiv, {
-          videoId: videoId,
-          playerVars: {
-            start: start,
-            end: end,
-            rel: 0,
-            modestbranding: 1,
-            autoplay: 1,
-            controls: 1,
-            enablejsapi: 1
-          },
-          events: {
-            onReady: (event) => {
-              event.target.playVideo();
-              setTimeout(() => {
-                const overlayTop = container.querySelector(".overlay-top");
-                if (overlayTop) overlayTop.style.display = "none";
-              }, 1000);
-            },
-            onStateChange: (event) => {
-              if (event.data === YT.PlayerState.ENDED) {
-                const overlayFull = container.querySelector(".overlay-full");
-                if (overlayFull) overlayFull.style.display = "flex";
-              }
-            }
-          }
-        });
-
-        players.push({ player, start, container });
-      });
-    }
-
-    document.addEventListener("click", function (e) {
-      if (e.target && e.target.classList.contains("replay-button")) {
-        const overlay = e.target.closest(".overlay-full");
-        const container = overlay.closest(".video-container");
-        const playerIndex = Array.from(document.querySelectorAll(".video-container")).indexOf(container);
-        const { player, start } = players[playerIndex];
-        overlay.style.display = "none";
-        player.seekTo(start);
-        player.playVideo();
-      }
-    });
-
-    function showSlide(index) {
-      slides.forEach((slide, i) => {
-        slide.classList.toggle("active-slide", i === index);
-      });
-    }
-
-    function nextSlide() {
-      if (currentSlide < slides.length - 1) {
-        currentSlide++;
-        showSlide(currentSlide);
-      }
-    }
-
-    function prevSlide() {
-      if (currentSlide > 0) {
-        currentSlide--;
-        showSlide(currentSlide);
-      }
-    }
-
-    window.addEventListener("DOMContentLoaded", () => {
-      const wrappers = document.querySelectorAll(".video-wrapper");
-      const indexDiv = document.getElementById("index-buttons");
-
-      wrappers.forEach((wrapper, idx) => {
-        const title = wrapper.querySelector("h2").innerText;
-        const id = wrapper.id || `q${idx + 1}`;
-        wrapper.id = id;
-
-        const a = document.createElement("a");
-        a.className = "link-button";
-        a.href = "#";
-        a.innerText = title;
-        a.addEventListener("click", (e) => {
-          e.preventDefault();
-          currentSlide = idx;
-          showSlide(currentSlide);
-        });
-
-        indexDiv.appendChild(a);
-      });
-    });
-  </script>
 </body>
 </html>
 

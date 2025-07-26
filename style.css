@@ -44,11 +44,10 @@ h1 {
 
 /* 영상 전체 확대 */
 .video-wrapper {
-  width: 100vw;
-  height: calc(100vh - 100px);
+  width: 100%;
+  max-width: 960px;   /* 적절한 크기로 제한 */
   margin: 0 auto;
-  padding: 0;
-  box-sizing: border-box;
+  padding: 20px 0;
 }
 
 .video-container {

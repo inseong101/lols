@@ -1,97 +1,89 @@
 let players = [];
-let currentSlide = 0;
-const slides = document.querySelectorAll(".slide");
 
 function onYouTubeIframeAPIReady() {
-  const containers = document.querySelectorAll(".video-container");
-  containers.forEach((container) => {
+  const containers = document.querySelectorAll('.video-container');
+
+  containers.forEach((container, index) => {
     const videoId = container.dataset.videoId;
-    const start = parseInt(container.dataset.start);
-    const end = parseInt(container.dataset.end);
-    const playerDiv = container.querySelector(".player");
+    const start = parseInt(container.dataset.start, 10);
+    const end = parseInt(container.dataset.end, 10);
+
+    const playerDiv = container.querySelector('.player');
+    const overlay = container.querySelector('.overlay-full');
+    const mask = container.querySelector('.player-mask');
 
     const player = new YT.Player(playerDiv, {
-      videoId: videoId,
+      videoId,
       playerVars: {
-        start: start,
-        end: end,
+        start,
+        end,
         rel: 0,
         modestbranding: 1,
-        autoplay: 1,
         controls: 1,
-        enablejsapi: 1
+        autoplay: 0
       },
       events: {
-        onReady: (event) => {
-          event.target.playVideo();
-          setTimeout(() => {
-            const overlayTop = container.querySelector(".overlay-top");
-            if (overlayTop) overlayTop.style.display = "none";
-          }, 1000);
+        onReady: () => {
+          // 최초 시작 시 overlay 보여줌
+          overlay.classList.add('show');
         },
         onStateChange: (event) => {
           if (event.data === YT.PlayerState.ENDED) {
-            const overlayFull = container.querySelector(".overlay-full");
-            if (overlayFull) overlayFull.style.display = "flex";
+            overlay.classList.add('show');
           }
         }
       }
     });
-    players.push({ player, start, container });
-  });
-}
 
-document.addEventListener("click", function (e) {
-  if (e.target && e.target.classList.contains("replay-button")) {
-    const overlay = e.target.closest(".overlay-full");
-    const container = overlay.closest(".video-container");
-    const playerIndex = Array.from(document.querySelectorAll(".video-container")).indexOf(container);
-    const { player, start } = players[playerIndex];
-    overlay.style.display = "none";
-    player.seekTo(start);
-    player.playVideo();
-  }
-});
+    overlay.querySelector('.replay-button').addEventListener('click', () => {
+      player.seekTo(start);
+      player.playVideo();
 
-function showSlide(index) {
-  slides.forEach((slide, i) => {
-    slide.classList.toggle("active-slide", i === index);
-  });
-}
+      overlay.classList.remove('show');
 
-function nextSlide() {
-  if (currentSlide < slides.length - 1) {
-    currentSlide++;
-    showSlide(currentSlide);
-  }
-}
-
-function prevSlide() {
-  if (currentSlide > 0) {
-    currentSlide--;
-    showSlide(currentSlide);
-  }
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-  const wrappers = document.querySelectorAll(".video-wrapper");
-  const indexDiv = document.getElementById("index-buttons");
-
-  wrappers.forEach((wrapper, idx) => {
-    const title = wrapper.querySelector("h2").innerText;
-    const id = wrapper.id || `q${idx + 1}`;
-    wrapper.id = id;
-
-    const a = document.createElement("a");
-    a.className = "link-button";
-    a.href = "#";
-    a.innerText = title;
-    a.addEventListener("click", (e) => {
-      e.preventDefault();
-      currentSlide = idx;
-      showSlide(currentSlide);
+      // 1초 뒤에 mask를 보여줌 (썸네일 방지용)
+      mask.style.display = 'block';
+      setTimeout(() => {
+        mask.style.display = 'none';
+      }, 1000);
     });
 
-    indexDiv.appendChild(a);
+    players.push(player);
+  });
+}
+
+// 슬라이드 이동
+let currentSlide = 0;
+function showSlide(index) {
+  const slides = document.querySelectorAll('.slide');
+  if (index < 0 || index >= slides.length) return;
+
+  slides[currentSlide].classList.remove('active-slide');
+  slides[index].classList.add('active-slide');
+  currentSlide = index;
+}
+function nextSlide() {
+  showSlide(currentSlide + 1);
+}
+function prevSlide() {
+  showSlide(currentSlide - 1);
+}
+
+// 자동 인덱스 버튼 생성
+window.addEventListener('DOMContentLoaded', () => {
+  const slides = document.querySelectorAll('.slide');
+  const container = document.getElementById('index-buttons');
+
+  slides.forEach((slide, i) => {
+    const btn = document.createElement('a');
+    btn.href = `#q${i + 1}`;
+    btn.className = 'link-button';
+    btn.textContent = slide.querySelector('h2').textContent;
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      showSlide(i);
+    });
+    container.appendChild(btn);
   });
 });
+

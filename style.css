@@ -1,95 +1,69 @@
-body {
-  margin: 0;
-  padding: 20px;
-  background-color: #000;
-  color: #fff;
-  font-family: sans-serif;
-  scroll-behavior: smooth;
-  text-align: center;
+let players = [];
+
+function onYouTubeIframeAPIReady() {
+  const containers = document.querySelectorAll(".video-container");
+
+  containers.forEach((container, index) => {
+    const videoId = container.dataset.videoId;
+    const start = parseFloat(container.dataset.start);
+    const end = parseFloat(container.dataset.end);
+    const overlay = container.querySelector(".overlay-full");
+    const replayBtn = container.querySelector(".replay-button");
+
+    const player = new YT.Player(container.querySelector(".player"), {
+      videoId,
+      playerVars: {
+        start,
+        end,
+        autoplay: 1,
+        mute: 1,
+        rel: 0,
+        modestbranding: 1,
+        controls: 1,
+      },
+      events: {
+        onReady: (e) => {
+          e.target.playVideo();
+          monitorEnd(e.target, end, overlay);
+        },
+        onStateChange: (e) => {
+          if (e.data === YT.PlayerState.ENDED) {
+            overlay.classList.add("show");
+          }
+        },
+      },
+    });
+
+    players.push(player);
+
+    // 다시보기 버튼 기능
+    replayBtn.addEventListener("click", () => {
+      overlay.classList.add("show");
+      player.seekTo(start);
+      player.playVideo();
+      setTimeout(() => {
+        overlay.classList.remove("show");
+      }, 1000);
+    });
+  });
+
+  // 소리켜기 버튼
+  const unmuteBtn = document.querySelector(".unmute-button");
+  unmuteBtn.addEventListener("click", () => {
+    players.forEach(p => {
+      try {
+        p.unMute();
+      } catch {}
+    });
+  });
 }
 
-h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.video-wrapper {
-  max-width: 720px;
-  margin: 0 auto 60px auto;
-  position: relative;
-}
-
-.video-container {
-  position: relative;
-  width: 100%;
-  padding-top: 56.25%;
-  background: black;
-}
-
-.player {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-}
-
-.player-mask {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 62px; /* 제목가리개 높이 조절 */
-  background-color: black;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-}
-
-.mask-label {
-  font-size: 14px;
-  color: white;
-}
-
-.overlay-full {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  opacity: 0.95;
-  z-index: 3;
-  display: none;
-  align-items: center;
-  justify-content: center;
-}
-
-.overlay-full.show {
-  display: flex;
-}
-
-.replay-button {
-  font-size: 20px;
-  padding: 14px 28px;
-  background-color: #222;
-  color: white;
-  border: 2px solid white;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.unmute-button {
-  font-size: 20px;
-  padding: 12px 20px;
-  margin-top: 30px;
-  background-color: #444;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+function monitorEnd(player, end, overlay) {
+  const interval = setInterval(() => {
+    if (player.getCurrentTime && player.getCurrentTime() >= end - 1) {
+      overlay.classList.add("show");
+      clearInterval(interval);
+    }
+  }, 500);
 }
 

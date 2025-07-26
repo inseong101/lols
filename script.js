@@ -1,49 +1,90 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>제3회 전국모의고사 멀티미디어형 영상 모음</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <script src="script.js" defer></script>
-</head>
-<body>
-  <h1>제3회 전국모의고사 멀티미디어형 영상 모음</h1>
-  <div id="index-buttons"></div>
+let players = [];
+let currentSlide = 0;
 
-  <div id="slides-container">
-    <!-- Slide 1 -->
-    <div class="slide active-slide video-wrapper" id="q1">
-      <h2>2교시 침구학 40번</h2>
-      <div class="video-container" data-video-id="vPCkCcvD7P8" data-start="96" data-end="106">
-        <div class="player-mask"><span class="mask-label">2교시 침구학 40번</span></div>
-        <div class="player"></div>
-      </div>
-    </div>
+function onYouTubeIframeAPIReady() {
+  document.querySelectorAll(".video-container").forEach((container, index) => {
+    const videoId = container.dataset.videoId;
+    const start = parseInt(container.dataset.start || "0");
+    const end = parseInt(container.dataset.end || "9999");
 
-    <!-- Slide 2 -->
-    <div class="slide video-wrapper" id="q2">
-      <h2>3교시 신경정신과학 20번</h2>
-      <div class="video-container" data-video-id="N65GS4iTyhs" data-start="10" data-end="20">
-        <div class="player-mask"><span class="mask-label">3교시 신경정신과학 20번</span></div>
-        <div class="player"></div>
-      </div>
-    </div>
+    const playerDiv = container.querySelector(".player");
+    const overlay = document.createElement("div");
+    overlay.className = "overlay-full";
+    const button = document.createElement("button");
+    button.className = "replay-button";
+    button.innerText = "▶ 다시보기";
+    overlay.appendChild(button);
+    container.appendChild(overlay);
 
-    <!-- Slide 3 -->
-    <div class="slide video-wrapper" id="q3">
-      <h2>3교시 부인과학 79번</h2>
-      <div class="video-container" data-video-id="nM91dHAwcr8" data-start="5" data-end="15">
-        <div class="player-mask"><span class="mask-label">3교시 부인과학 79번</span></div>
-        <div class="player"></div>
-      </div>
-    </div>
-  </div>
+    const player = new YT.Player(playerDiv, {
+      videoId: videoId,
+      playerVars: {
+        autoplay: 1,
+        mute: 1,
+        controls: 1,
+        rel: 0,
+        modestbranding: 1,
+        start: start,
+        end: end,
+        enablejsapi: 1,
+      },
+      events: {
+        onReady: (e) => e.target.playVideo(),
+        onStateChange: (e) => {
+          if (e.data === YT.PlayerState.ENDED) {
+            overlay.classList.add("show");
+          }
+        },
+      },
+    });
 
-  <div id="slide-controls">
-    <button onclick="prevSlide()">이전</button>
-    <button onclick="nextSlide()">다음</button>
-    <button class="unmute-button">🔊 소리 켜기</button>
-  </div>
-</body>
-</html>
+    button.addEventListener("click", () => {
+      overlay.classList.remove("show");
+      setTimeout(() => {
+        player.seekTo(start);
+        player.playVideo();
+      }, 1000);
+    });
+
+    players.push(player);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  // index button 자동 생성
+  const buttons = document.getElementById("index-buttons");
+  document.querySelectorAll(".slide").forEach((slide, i) => {
+    const b = document.createElement("button");
+    b.textContent = `${i + 1}번`;
+    b.className = "link-button";
+    b.onclick = () => showSlide(i);
+    buttons.appendChild(b);
+  });
+
+  // 음소거 해제 버튼
+  const unmute = document.querySelector(".unmute-button");
+  if (unmute) {
+    unmute.addEventListener("click", () => {
+      players.forEach(p => p.unMute());
+    });
+  }
+});
+
+function showSlide(n) {
+  const slides = document.querySelectorAll(".slide");
+  slides.forEach((slide, i) => {
+    slide.classList.toggle("active-slide", i === n);
+  });
+  currentSlide = n;
+}
+
+function prevSlide() {
+  const slides = document.querySelectorAll(".slide");
+  showSlide((currentSlide - 1 + slides.length) % slides.length);
+}
+
+function nextSlide() {
+  const slides = document.querySelectorAll(".slide");
+  showSlide((currentSlide + 1) % slides.length);
+}
+

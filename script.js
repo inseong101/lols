@@ -10,7 +10,7 @@ function onYouTubeIframeAPIReady() {
     const mask = container.querySelector(".player-mask");
     const replayBtn = mask.querySelector(".replay-button");
 
-    let checkInterval;
+    let intervalId;
 
     const player = new YT.Player(playerDiv, {
       videoId: videoId,
@@ -31,30 +31,27 @@ function onYouTubeIframeAPIReady() {
         },
         onStateChange: (e) => {
           if (e.data === YT.PlayerState.PLAYING) {
-            // 재생될 때 타이머 실행
-            clearInterval(checkInterval);
-            checkInterval = setInterval(() => {
+            clearInterval(intervalId);
+            intervalId = setInterval(() => {
               const currentTime = e.target.getCurrentTime();
               if (currentTime >= end - 1) {
                 mask.classList.add("show");
-                clearInterval(checkInterval); // 한 번만 실행되도록
+                clearInterval(intervalId);
               }
-            }, 250);
-          } else if (
-            e.data === YT.PlayerState.ENDED ||
-            e.data === YT.PlayerState.PAUSED
-          ) {
-            clearInterval(checkInterval); // 멈춤/끝났을 때도 타이머 종료
+            }, 300);
+          } else if (e.data === YT.PlayerState.ENDED || e.data === YT.PlayerState.PAUSED) {
+            clearInterval(intervalId);
           }
-        }
+        },
       }
     });
 
     replayBtn.addEventListener("click", () => {
-      mask.classList.remove("show");
+      player.seekTo(start);
+      player.playVideo();
+      // 가림막은 1초 뒤에 사라짐
       setTimeout(() => {
-        player.seekTo(start);
-        player.playVideo();
+        mask.classList.remove("show");
       }, 1000);
     });
 
@@ -66,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const unmuteBtn = document.querySelector(".unmute-button");
   if (unmuteBtn) {
     unmuteBtn.addEventListener("click", () => {
-      players.forEach(p => {
+      players.forEach((p) => {
         if (typeof p.unMute === "function") {
           p.unMute();
         }
@@ -74,4 +71,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-

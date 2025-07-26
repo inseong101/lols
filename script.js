@@ -10,6 +10,8 @@ function onYouTubeIframeAPIReady() {
     const mask = container.querySelector(".player-mask");
     const replayBtn = mask.querySelector(".replay-button");
 
+    let checkInterval;
+
     const player = new YT.Player(playerDiv, {
       videoId: videoId,
       playerVars: {
@@ -25,25 +27,29 @@ function onYouTubeIframeAPIReady() {
       events: {
         onReady: (e) => {
           e.target.playVideo();
-          // 시작 시 가림막 무조건 숨김
           mask.classList.remove("show");
         },
         onStateChange: (e) => {
           if (e.data === YT.PlayerState.PLAYING) {
-            // 매초마다 현재 시간을 체크하여 끝나기 1초 전에 마스크 표시
-            const interval = setInterval(() => {
+            // 재생될 때 타이머 실행
+            clearInterval(checkInterval);
+            checkInterval = setInterval(() => {
               const currentTime = e.target.getCurrentTime();
               if (currentTime >= end - 1) {
                 mask.classList.add("show");
-                clearInterval(interval); // 한 번만 실행
+                clearInterval(checkInterval); // 한 번만 실행되도록
               }
-            }, 500);
+            }, 250);
+          } else if (
+            e.data === YT.PlayerState.ENDED ||
+            e.data === YT.PlayerState.PAUSED
+          ) {
+            clearInterval(checkInterval); // 멈춤/끝났을 때도 타이머 종료
           }
         }
       }
     });
 
-    // 다시보기 버튼 클릭 시
     replayBtn.addEventListener("click", () => {
       mask.classList.remove("show");
       setTimeout(() => {
@@ -56,7 +62,6 @@ function onYouTubeIframeAPIReady() {
   });
 }
 
-// 음소거 해제 버튼
 document.addEventListener("DOMContentLoaded", () => {
   const unmuteBtn = document.querySelector(".unmute-button");
   if (unmuteBtn) {

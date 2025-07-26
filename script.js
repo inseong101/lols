@@ -1,90 +1,49 @@
-let players = [];
-let currentSlide = 0;
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>제3회 전국모의고사 멀티미디어형 영상 모음</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <h1>제3회 전국모의고사 멀티미디어형 영상 모음</h1>
+  <div id="index-buttons"></div>
 
-function onYouTubeIframeAPIReady() {
-  const containers = document.querySelectorAll('.video-container');
-  containers.forEach((container, index) => {
-    const videoId = container.dataset.videoId;
-    const start = parseInt(container.dataset.start);
-    const end = parseInt(container.dataset.end);
-    const playerDiv = container.querySelector('.player');
-    const overlay = container.querySelector('.overlay-full');
-    const mask = container.querySelector('.player-mask');
+  <div id="slides-container">
+    <!-- Slide 1 -->
+    <div class="slide active-slide video-wrapper" id="q1">
+      <h2>2교시 침구학 40번</h2>
+      <div class="video-container" data-video-id="vPCkCcvD7P8" data-start="96" data-end="106">
+        <div class="player-mask"><span class="mask-label">2교시 침구학 40번</span></div>
+        <div class="player"></div>
+      </div>
+    </div>
 
-    const player = new YT.Player(playerDiv, {
-      videoId: videoId,
-      playerVars: {
-        start: start,
-        end: end,
-        rel: 0,
-        modestbranding: 1,
-        controls: 1,
-        autoplay: 0,
-        mute: 0,
-        enablejsapi: 1
-      },
-      events: {
-        onStateChange: (event) => {
-          if (event.data === YT.PlayerState.ENDED) {
-            overlay.classList.add('show');
-          }
-        }
-      }
-    });
+    <!-- Slide 2 -->
+    <div class="slide video-wrapper" id="q2">
+      <h2>3교시 신경정신과학 20번</h2>
+      <div class="video-container" data-video-id="N65GS4iTyhs" data-start="10" data-end="20">
+        <div class="player-mask"><span class="mask-label">3교시 신경정신과학 20번</span></div>
+        <div class="player"></div>
+      </div>
+    </div>
 
-    overlay.querySelector('.replay-button').addEventListener('click', () => {
-      overlay.classList.add('show');
+    <!-- Slide 3 -->
+    <div class="slide video-wrapper" id="q3">
+      <h2>3교시 부인과학 79번</h2>
+      <div class="video-container" data-video-id="nM91dHAwcr8" data-start="5" data-end="15">
+        <div class="player-mask"><span class="mask-label">3교시 부인과학 79번</span></div>
+        <div class="player"></div>
+      </div>
+    </div>
+  </div>
 
-      setTimeout(() => {
-        overlay.classList.remove('show');
-        player.seekTo(start);
-        player.playVideo();
-      }, 1000);
-    });
-
-    players.push(player);
-  });
-}
-
-function showSlide(index) {
-  const slides = document.querySelectorAll('.slide');
-  if (index < 0 || index >= slides.length) return;
-
-  slides[currentSlide].classList.remove('active-slide');
-  currentSlide = index;
-  slides[currentSlide].classList.add('active-slide');
-}
-
-function nextSlide() {
-  const slides = document.querySelectorAll('.slide');
-  if (currentSlide < slides.length - 1) {
-    showSlide(currentSlide + 1);
-  }
-}
-
-function prevSlide() {
-  if (currentSlide > 0) {
-    showSlide(currentSlide - 1);
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const indexButtons = document.getElementById('index-buttons');
-  const slides = document.querySelectorAll('.slide');
-
-  slides.forEach((slide, idx) => {
-    const btn = document.createElement('a');
-    btn.className = 'link-button';
-    btn.textContent = slide.querySelector('h2').textContent;
-    btn.href = '#';
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      showSlide(idx);
-    });
-    indexButtons.appendChild(btn);
-  });
-
-  showSlide(0);
-});
-
-
+  <div id="slide-controls">
+    <button onclick="prevSlide()">이전</button>
+    <button onclick="nextSlide()">다음</button>
+    <button class="unmute-button">🔊 소리 켜기</button>
+  </div>
+</body>
+</html>

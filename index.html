@@ -45,14 +45,25 @@
         background: black;
       }
 
-      .video-container .overlay-top {
+      .video-container iframe,
+      .video-container .player {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
-        height: 60px; /* ✅ 유튜브 제목 가리기용 */
-        background-color: black;
+        height: 100%;
+        border: none;
         z-index: 1;
+      }
+
+      .video-container .overlay-top {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 60px;
+        width: 100%;
+        background-color: black;
+        z-index: 2;
       }
 
       .video-container .overlay-full {
@@ -62,7 +73,7 @@
         width: 100%;
         height: 100%;
         background-color: black;
-        z-index: 2;
+        z-index: 3;
         display: none;
         justify-content: center;
         align-items: center;
@@ -98,7 +109,7 @@
     <!-- ✅ 자동 인덱스 버튼 -->
     <div id="index-buttons" style="text-align: center; margin-bottom: 40px;"></div>
 
-    <!-- ✅ 영상 목록 -->
+    <!-- ✅ 영상들 (필요 시 복사해서 계속 추가 가능) -->
     <div class="video-wrapper" id="q1">
       <h2>2교시 침구학 40번</h2>
       <div class="video-container" data-video-id="vPCkCcvD7P8" data-start="96" data-end="106">
@@ -108,8 +119,8 @@
         </div>
         <div class="player"></div>
       </div>
-      <h3>출처:
-        <a href="https://www.youtube.com/watch?v=vPCkCcvD7P8" target="_blank" style="color: #4eaaff;">https://www.youtube.com/watch?v=vPCkCcvD7P8</a>
+      <h3>
+        출처: <a href="https://www.youtube.com/watch?v=vPCkCcvD7P8" target="_blank" style="color: #4eaaff;">https://www.youtube.com/watch?v=vPCkCcvD7P8</a>
       </h3>
     </div>
 
@@ -122,8 +133,8 @@
         </div>
         <div class="player"></div>
       </div>
-      <h3>출처:
-        <a href="https://www.youtube.com/watch?v=N65GS4iTyhs" target="_blank" style="color: #4eaaff;">https://www.youtube.com/watch?v=N65GS4iTyhs</a>
+      <h3>
+        출처: <a href="https://www.youtube.com/watch?v=N65GS4iTyhs" target="_blank" style="color: #4eaaff;">https://www.youtube.com/watch?v=N65GS4iTyhs</a>
       </h3>
     </div>
 
@@ -136,8 +147,8 @@
         </div>
         <div class="player"></div>
       </div>
-      <h3>출처:
-        <a href="https://www.youtube.com/watch?v=nM91dHAwcr8" target="_blank" style="color: #4eaaff;">https://www.youtube.com/watch?v=nM91dHAwcr8</a>
+      <h3>
+        출처: <a href="https://www.youtube.com/watch?v=nM91dHAwcr8" target="_blank" style="color: #4eaaff;">https://www.youtube.com/watch?v=nM91dHAwcr8</a>
       </h3>
     </div>
 
@@ -181,7 +192,7 @@
         });
       }
 
-      // ✅ 다시보기 버튼 이벤트 (공통)
+      // ✅ 다시보기 버튼
       document.addEventListener("click", function (e) {
         if (e.target && e.target.classList.contains("replay-button")) {
           const overlay = e.target.closest(".overlay-full");
@@ -216,3 +227,4 @@
     </script>
   </body>
 </html>
+

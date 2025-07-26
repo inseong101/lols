@@ -2,26 +2,28 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>제3회 전국모의고사 멀티미디어형 영상 모음 페이지</title>
+    <title>제3회 전국모의고사 멀티미디어형 영상 모음</title>
     <style>
-      body {
+      html, body {
         margin: 0;
-        padding: 20px;
+        padding: 0;
         background-color: #000;
         color: #fff;
         font-family: sans-serif;
         scroll-behavior: smooth;
+        overflow: hidden;
+        height: 100vh;
       }
 
       h1 {
         text-align: center;
-        margin-bottom: 10px;
+        margin: 20px 0 10px 0;
       }
 
       .link-button {
         display: inline-block;
-        padding: 12px 24px;
-        margin: 10px;
+        padding: 10px 20px;
+        margin: 4px;
         background-color: #333;
         color: white;
         text-decoration: none;
@@ -32,10 +34,25 @@
         background-color: #555;
       }
 
+      #index-buttons {
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      .slide {
+        display: none;
+        height: calc(100vh - 100px);
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      .active-slide {
+        display: block;
+      }
+
       .video-wrapper {
-        width: 100%;
         max-width: 720px;
-        margin: 0 auto 40px auto;
+        margin: 0 auto;
       }
 
       .video-container {
@@ -56,7 +73,7 @@
         z-index: 1;
       }
 
-      .video-container .overlay-top {
+      .overlay-top {
         position: absolute;
         top: 0;
         left: 0;
@@ -66,7 +83,7 @@
         z-index: 2;
       }
 
-      .video-container .overlay-full {
+      .overlay-full {
         position: absolute;
         top: 0;
         left: 0;
@@ -77,7 +94,6 @@
         display: none;
         justify-content: center;
         align-items: center;
-        display: flex;
       }
 
       .replay-button {
@@ -93,73 +109,99 @@
       h2 {
         text-align: center;
         font-size: 20px;
-        margin-top: 55px;
+        margin-top: 10px;
       }
 
       h3 {
         text-align: center;
         font-size: 10px;
-        margin-top: 15px;
+        margin-top: 10px;
+      }
+
+      #slide-controls {
+        position: absolute;
+        bottom: 10px;
+        width: 100%;
+        text-align: center;
+      }
+
+      #slide-controls button {
+        margin: 0 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #444;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      #slide-controls button:hover {
+        background-color: #666;
       }
     </style>
   </head>
   <body>
     <h1>제3회 전국모의고사 멀티미디어형 영상 모음</h1>
+    <div id="index-buttons"></div>
 
-    <!-- ✅ 자동 인덱스 버튼 -->
-    <div id="index-buttons" style="text-align: center; margin-bottom: 40px;"></div>
-
-    <!-- ✅ 영상들 (필요 시 복사해서 계속 추가 가능) -->
-    <div class="video-wrapper" id="q1">
-      <h2>2교시 침구학 40번</h2>
-      <div class="video-container" data-video-id="vPCkCcvD7P8" data-start="96" data-end="106">
-        <div class="overlay-top"></div>
-        <div class="overlay-full">
-          <button class="replay-button">다시보기</button>
+    <!-- ✅ 슬라이드 영역 -->
+    <div id="slides-container">
+      <!-- ✅ Slide 1 -->
+      <div class="slide active-slide video-wrapper" id="q1">
+        <h2>2교시 침구학 40번</h2>
+        <div class="video-container" data-video-id="vPCkCcvD7P8" data-start="96" data-end="106">
+          <div class="overlay-top"></div>
+          <div class="overlay-full">
+            <button class="replay-button">다시보기</button>
+          </div>
+          <div class="player"></div>
         </div>
-        <div class="player"></div>
+        <h3><a href="https://www.youtube.com/watch?v=vPCkCcvD7P8" target="_blank" style="color: #4eaaff;">출처: https://www.youtube.com/watch?v=vPCkCcvD7P8</a></h3>
       </div>
-      <h3>
-        출처: <a href="https://www.youtube.com/watch?v=vPCkCcvD7P8" target="_blank" style="color: #4eaaff;">https://www.youtube.com/watch?v=vPCkCcvD7P8</a>
-      </h3>
+
+      <!-- ✅ Slide 2 -->
+      <div class="slide video-wrapper" id="q2">
+        <h2>3교시 신경정신과학 20번</h2>
+        <div class="video-container" data-video-id="N65GS4iTyhs" data-start="10" data-end="20">
+          <div class="overlay-top"></div>
+          <div class="overlay-full">
+            <button class="replay-button">다시보기</button>
+          </div>
+          <div class="player"></div>
+        </div>
+        <h3><a href="https://www.youtube.com/watch?v=N65GS4iTyhs" target="_blank" style="color: #4eaaff;">출처: https://www.youtube.com/watch?v=N65GS4iTyhs</a></h3>
+      </div>
+
+      <!-- ✅ Slide 3 -->
+      <div class="slide video-wrapper" id="q3">
+        <h2>3교시 부인과학 79번</h2>
+        <div class="video-container" data-video-id="nM91dHAwcr8" data-start="5" data-end="15">
+          <div class="overlay-top"></div>
+          <div class="overlay-full">
+            <button class="replay-button">다시보기</button>
+          </div>
+          <div class="player"></div>
+        </div>
+        <h3><a href="https://www.youtube.com/watch?v=nM91dHAwcr8" target="_blank" style="color: #4eaaff;">출처: https://www.youtube.com/watch?v=nM91dHAwcr8</a></h3>
+      </div>
     </div>
 
-    <div class="video-wrapper" id="q2">
-      <h2>3교시 신경정신과학 20번</h2>
-      <div class="video-container" data-video-id="N65GS4iTyhs" data-start="10" data-end="20">
-        <div class="overlay-top"></div>
-        <div class="overlay-full">
-          <button class="replay-button">다시보기</button>
-        </div>
-        <div class="player"></div>
-      </div>
-      <h3>
-        출처: <a href="https://www.youtube.com/watch?v=N65GS4iTyhs" target="_blank" style="color: #4eaaff;">https://www.youtube.com/watch?v=N65GS4iTyhs</a>
-      </h3>
+    <!-- ✅ 슬라이드 전환 버튼 -->
+    <div id="slide-controls">
+      <button onclick="prevSlide()">이전</button>
+      <button onclick="nextSlide()">다음</button>
     </div>
 
-    <div class="video-wrapper" id="q3">
-      <h2>3교시 부인과학 79번</h2>
-      <div class="video-container" data-video-id="nM91dHAwcr8" data-start="5" data-end="15">
-        <div class="overlay-top"></div>
-        <div class="overlay-full">
-          <button class="replay-button">다시보기</button>
-        </div>
-        <div class="player"></div>
-      </div>
-      <h3>
-        출처: <a href="https://www.youtube.com/watch?v=nM91dHAwcr8" target="_blank" style="color: #4eaaff;">https://www.youtube.com/watch?v=nM91dHAwcr8</a>
-      </h3>
-    </div>
-
-    <!-- ✅ YouTube API & 스크립트 -->
+    <!-- ✅ YouTube API -->
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
       const players = [];
+      let currentSlide = 0;
+      const slides = document.querySelectorAll(".slide");
 
       function onYouTubeIframeAPIReady() {
         const containers = document.querySelectorAll(".video-container");
-
         containers.forEach((container, idx) => {
           const videoId = container.dataset.videoId;
           const start = parseInt(container.dataset.start);
@@ -174,12 +216,16 @@
               rel: 0,
               modestbranding: 1,
               autoplay: 1,
-              mute: 1,
               controls: 1,
               enablejsapi: 1
             },
             events: {
-              onReady: (event) => event.target.playVideo(),
+              onReady: (event) => {
+                event.target.playVideo();
+                setTimeout(() => {
+                  container.querySelector(".overlay-top").style.display = "none";
+                }, 1000);
+              },
               onStateChange: (event) => {
                 if (event.data === YT.PlayerState.ENDED) {
                   container.querySelector(".overlay-full").style.display = "flex";
@@ -192,21 +238,39 @@
         });
       }
 
-      // ✅ 다시보기 버튼
       document.addEventListener("click", function (e) {
         if (e.target && e.target.classList.contains("replay-button")) {
           const overlay = e.target.closest(".overlay-full");
           const container = overlay.closest(".video-container");
           const playerIndex = Array.from(document.querySelectorAll(".video-container")).indexOf(container);
           const { player, start } = players[playerIndex];
-
           overlay.style.display = "none";
           player.seekTo(start);
           player.playVideo();
         }
       });
 
-      // ✅ 상단 인덱스 버튼 자동 생성
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.toggle("active-slide", i === index);
+        });
+      }
+
+      function nextSlide() {
+        if (currentSlide < slides.length - 1) {
+          currentSlide++;
+          showSlide(currentSlide);
+        }
+      }
+
+      function prevSlide() {
+        if (currentSlide > 0) {
+          currentSlide--;
+          showSlide(currentSlide);
+        }
+      }
+
+      // 자동 인덱스 버튼 생성
       window.addEventListener("DOMContentLoaded", () => {
         const wrappers = document.querySelectorAll(".video-wrapper");
         const indexDiv = document.getElementById("index-buttons");
@@ -218,8 +282,13 @@
 
           const a = document.createElement("a");
           a.className = "link-button";
-          a.href = `#${id}`;
+          a.href = "#";
           a.innerText = title;
+          a.addEventListener("click", (e) => {
+            e.preventDefault();
+            currentSlide = idx;
+            showSlide(currentSlide);
+          });
 
           indexDiv.appendChild(a);
         });

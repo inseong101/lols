@@ -35,5 +35,21 @@
     <button class="unmute-button">🔊 소리 켜기</button>
     <a href="https://inseong101.github.io/multimedia/" class="home-button">← 문제 목록으로 돌아가기</a>
   </div>
+  <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const container = document.querySelector('.video-container');
+    const videoId = container.dataset.videoId;
+    if (videoId) {
+      const sourceLink = `https://www.youtube.com/watch?v=${videoId}`;
+      const creditDiv = document.createElement('div');
+      creditDiv.style.textAlign = 'center';
+      creditDiv.style.marginTop = '20px';
+      creditDiv.style.fontSize = '14px';
+      creditDiv.style.color = '#888';
+      creditDiv.innerHTML = `출처: <a href="${sourceLink}" target="_blank" style="color: #4eaaff; text-decoration: underline;">${sourceLink}</a>`;
+      document.body.appendChild(creditDiv);
+    }
+  });
+</script>
 </body>
 </html>

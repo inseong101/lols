@@ -69,23 +69,16 @@ function onYouTubeIframeAPIReady() {
   }
 }
 
-// ✅ 선택지 버튼 클릭 이벤트
+// ✅ 보기 클릭 시 단순 선택값 처리 (정답표시 X)
 document.querySelectorAll('.choice-button').forEach(btn => {
   btn.addEventListener('click', () => {
-    const correctAnswer = "1"; // 정답 번호만 여기에 설정
     const selected = btn.dataset.answer;
+    console.log("사용자 선택:", selected);
 
-    // 모든 버튼 초기화
-    document.querySelectorAll('.choice-button').forEach(b => {
-      b.classList.remove('correct', 'incorrect');
-      b.disabled = true;
-    });
+    // (선택사항) 보기버튼 모두 비활성화
+    // document.querySelectorAll('.choice-button').forEach(b => b.disabled = true);
 
-    if (selected === correctAnswer) {
-      btn.classList.add('correct');
-    } else {
-      btn.classList.add('incorrect');
-      document.querySelector(`.choice-button[data-answer="${correctAnswer}"]`)?.classList.add('correct');
-    }
+    // (선택사항) 자동 이동 등 추가 가능
+    // window.location.href = "2.html";
   });
 });

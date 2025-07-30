@@ -158,11 +158,3 @@ h1 {
 .choice-button:hover {
   background-color: #555;
 }
-
-.choice-button.correct {
-  background-color: #2e7d32 !important; /* 초록색 */
-}
-
-.choice-button.incorrect {
-  background-color: #c62828 !important; /* 빨간색 */
-}

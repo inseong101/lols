@@ -125,3 +125,44 @@ h1 {
   background: transparent;
   pointer-events: all; /* 사용자 상호작용 차단 */
 }
+
+.question-box {
+  max-width: 960px;
+  margin: 40px auto 0 auto;
+  padding: 20px;
+  background: #111;
+  font-size: 18px;
+  line-height: 1.6;
+  border-bottom: 2px solid #444;
+}
+
+.choices {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.choice-button {
+  font-size: 18px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.choice-button:hover {
+  background-color: #555;
+}
+
+.choice-button.correct {
+  background-color: #2e7d32 !important; /* 초록색 */
+}
+
+.choice-button.incorrect {
+  background-color: #c62828 !important; /* 빨간색 */
+}

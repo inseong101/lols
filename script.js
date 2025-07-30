@@ -68,3 +68,24 @@ function onYouTubeIframeAPIReady() {
     });
   }
 }
+
+// ✅ 선택지 버튼 클릭 이벤트
+document.querySelectorAll('.choice-button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const correctAnswer = "1"; // 정답 번호만 여기에 설정
+    const selected = btn.dataset.answer;
+
+    // 모든 버튼 초기화
+    document.querySelectorAll('.choice-button').forEach(b => {
+      b.classList.remove('correct', 'incorrect');
+      b.disabled = true;
+    });
+
+    if (selected === correctAnswer) {
+      btn.classList.add('correct');
+    } else {
+      btn.classList.add('incorrect');
+      document.querySelector(`.choice-button[data-answer="${correctAnswer}"]`)?.classList.add('correct');
+    }
+  });
+});

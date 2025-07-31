@@ -11,15 +11,28 @@ h1 {
   margin: 20px 0;
 }
 
-.link-button {
-  display: inline-block;
-  padding: 12px 24px;
-  margin: 10px;
-  background-color: #333;
-  color: white;
-  text-decoration: none;
-  border-radius: 6px;
-}
+    .link-button {
+      display: inline-block;
+      padding: 12px 24px;
+      margin: 8px;
+      background-color: #333;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 6px;
+      white-space: normal;
+      line-height: 1.4;
+    }
+    .question-block {
+      display: inline-block;
+      text-align: center;
+      margin: 12px;
+    }
+    .question-block p {
+      margin-top: 4px;
+      font-size: 0.9em;
+      color: #666;
+    }
 .link-button:hover {
   background-color: #555;
 }

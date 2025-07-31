@@ -121,9 +121,18 @@ h1 {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 5; /* player(0)보다 위, mask(10)보다 아래 */
+  pointer-events: none; /* 기본적으로 터치 안 막음 */
+  z-index: 5;
+}
+
+.video-overlay-blocker .block-zone {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 12%; /* ✅ 건너뛰기 버튼 아래 하단만 덮음 */
   background: transparent;
-  pointer-events: all; /* 사용자 상호작용 차단 */
+  pointer-events: all; /* 이 부분만 클릭 차단 */
 }
 
 .question-box {
